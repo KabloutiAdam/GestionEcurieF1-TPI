@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom"
 import Background from "../../components/background"
 import NavBar from "../../components/navBar/navBar"
+import { useAuth } from "../../authProvider"
 
 
 export default function MainPage() {
-
+    const { currentUser } = useAuth()
+    
     const navigate = useNavigate()
     return (
 
@@ -15,7 +17,7 @@ export default function MainPage() {
                 <main className="pt-25 w-full h-screen flex justify-center items-center">
                     <button
                         className=" bg-red-600 hover:bg-red-700 hover:cursor-pointer focus:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 text-white text-2xl px-10 py-3 rounded-xl font-bold"
-                        onClick={()=> {navigate('/game')}}
+                        
                     >Commencer une saison</button>
                 </main>
             </Background>

@@ -14,10 +14,11 @@ app.use(express.json());
 
 // API routes
 const driverRoutes = require("./routes/drivers")
+const authRoutes = require("./routes/auth");
 
 
 app.use("/api/drivers", driverRoutes);
-
+app.use("/api/auth", authRoutes);
 
 
 if (isProduction) {
