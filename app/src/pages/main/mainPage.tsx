@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom"
+
 import Background from "../../components/background"
 import NavBar from "../../components/navBar/navBar"
-import { useAuth } from "../../authProvider"
+
 
 
 export default function MainPage() {
-    const { currentUser } = useAuth()
     
-    const navigate = useNavigate()
     return (
 
         <>

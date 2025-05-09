@@ -13,3 +13,11 @@ export type user = {
     role: string;
 }
 
+export type driverInterface = {
+    id: number;
+    firstname: string;
+    lastname: string;
+    rating: number;
+    nationality: string;
+    team: string;
+}

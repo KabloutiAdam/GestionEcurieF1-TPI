@@ -1,10 +1,19 @@
+import { useNavigate } from "react-router";
+import { useAuth } from "../../authProvider";
 import Button from "./button";
 
 
 
 
 export default function NavBar() {
+    const { handleLogout, currentUser } = useAuth()
 
+    const navigate = useNavigate()
+
+    const Logout = async () => {
+        handleLogout()
+        navigate("/login")
+    }
     return (
         <>
             <div className="w-full bg-black h-25 fixed right-0 border-b border-gray-700">
@@ -23,8 +32,8 @@ export default function NavBar() {
                         </div>
                     </div>
                     <div className="col-span-1 col-start-3 flex items-center justify-end mr-12 ">
-                        <p className="text-2xl font-bold text-white mr-5 italic">User-1243</p>
-                        <div onClick={()=> {alert("alarm")}}>
+                        <p className="text-2xl font-bold text-white mr-5 italic">{currentUser?.login}</p>
+                        <div onClick={Logout}>
                             <img className="w-10"src="/images/logo/logout.png" alt="Bouton de déconnexion" />
                         </div>
                     </div>
