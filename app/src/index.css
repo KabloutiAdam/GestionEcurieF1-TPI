@@ -3,12 +3,34 @@
 
 @keyframes shake {
 
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    50% { transform: translateX(10px); }
-    75% { transform: translateX(-10px); }
-  
+  0%,
+  100% {
+    transform: translateX(0);
   }
-  .animate-shake {
-    animation: shake 0.4s ease-in;
+
+  25% {
+    transform: translateX(-10px);
   }
+
+  50% {
+    transform: translateX(10px);
+  }
+
+  75% {
+    transform: translateX(-10px);
+  }
+
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in;
+}
+
+.drivers-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.ratingInput::-webkit-inner-spin-button, .ratingInput::-webkit-outer-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}

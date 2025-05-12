@@ -5,7 +5,7 @@ import Button from "./button";
 
 
 
-export default function NavBar() {
+export default function NavBar({activeTab}: {activeTab: string}) {
     const { handleLogout, currentUser } = useAuth()
 
     const navigate = useNavigate()
@@ -14,6 +14,7 @@ export default function NavBar() {
         handleLogout()
         navigate("/login")
     }
+   
     return (
         <>
             <div className="w-full bg-black h-25 fixed right-0 border-b border-gray-700">
@@ -26,9 +27,9 @@ export default function NavBar() {
                     </div>
                     <div className="col-span-1 col-start-2">
                         <div className="grid grid-cols-3 grid-row-1 w-full h-full text-center justify-center items-center">
-                            <Button label="Circuits" url="tracks"/>
-                            <Button label="Ecuries" url="teams"/>
-                            <Button label="Pilotes" url="drivers"/>
+                            <Button label="Circuits" url="tracks" isActive={activeTab === "tracks"}/>
+                            <Button label="Ecuries" url="teams" isActive={activeTab === "teams"}/>
+                            <Button label="Pilotes" url="drivers" isActive={activeTab === "drivers"}/>
                         </div>
                     </div>
                     <div className="col-span-1 col-start-3 flex items-center justify-end mr-12 ">

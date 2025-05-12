@@ -10,7 +10,7 @@ export default function MainPage() {
 
         <>
             <Background>
-                <NavBar />
+                <NavBar activeTab="none" />
 
                 <main className="pt-25 w-full h-screen flex justify-center items-center">
                     <button

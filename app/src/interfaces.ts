@@ -20,4 +20,12 @@ export type driverInterface = {
     rating: number;
     nationality: string;
     team: string;
+    pictureLink: string;
+    countryFlag: string;
+}
+
+export type country = {
+    id: number;
+    name: string;
+    countryFlag: string,
 }
