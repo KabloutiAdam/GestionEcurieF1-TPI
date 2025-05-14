@@ -3,21 +3,26 @@ import type { driverInterface } from "../interfaces";
 
 type Props = {
     driver: driverInterface;
+    onEdit: (driver: driverInterface) => void;
 }
 
-export default function DriverCard({ driver }: Props) {
+export default function DriverCard({ driver, onEdit }: Props) {
 
     const {currentUser} = useAuth();
+
+    
 
     return (
         <>
             <div className=" h-80 w-70  grid grid-rows-[4fr_1fr_2fr] grid-cols-1 bg-black rounded-2xl ">
                 <div className="row-span-1 row-start-1 flex flex-row items-start justify-between ">
                     <div className="w-[70%] flex flex-row items-start justify-between">
-                        <img src={`images/drivers/${driver.pictureLink}`} alt={`image de ${driver.firstname} ${driver.lastname}`} />
+                        <img className="rounded-2xl" src={`images/drivers/${driver.pictureLink}`} alt={`image de ${driver.firstname} ${driver.lastname}`} />
                     </div>
                     {currentUser?.role === "admin" && 
-                     <div className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">
+                     <div 
+                        onClick={() => onEdit(driver)}
+                        className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">
                         <img src="images/logo/editer.png" className=" invert brightness-0 w-full h-full" alt="logo édition" />
                     </div>
                         

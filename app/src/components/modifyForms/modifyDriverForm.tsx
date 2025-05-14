@@ -1,25 +1,55 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { country } from "../interfaces";
+import type { country, driverInterface } from "../../interfaces";
 
-export default function AddDriverForm({ isDisplayed }: { isDisplayed: boolean }) {
+type Props = {
+    driver: driverInterface | null;
+    isDisplayed: boolean
+}
+
+export default function EditDriverForm({ isDisplayed, driver }: Props) {
 
     const [isAddFormDisplayed, setIsAddFormDisplayed] = useState(isDisplayed)
-    const [firstname, setFirstname] = useState("")
-    const [lastname, setLastname] = useState("")
-    const [rating, setRating] = useState("")
+    const [firstname, setFirstname] = useState(driver?.firstname || "")
+    const [lastname, setLastname] = useState(driver?.lastname || "")
+    const [rating, setRating] = useState(driver?.rating.toString() || "")
     const [query, setQuery] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
 
     const [isNationalityDropdownDisplayed, setIsNationalityDropdownDisplayed] = useState<boolean>(false);
     const [countryList, setCountryList] = useState<country[]>([])
     const [nationalitySelected, setNationalitySelected] = useState<country>()
-    
+
 
     useEffect(() => {
         setIsAddFormDisplayed(isDisplayed)
-
+       
     }, [isDisplayed])
+
+    useEffect(() => {
+        if (driver) {
+            setFirstname(driver.firstname);
+            setLastname(driver.lastname);
+            setRating(driver.rating.toString());
+
+        }
+    }, [driver]);
+
+    useEffect(() => {
+        if (driver && countryList.length > 0) {
+        
+            const matchedCountry = countryList.find(
+                (c) => c.name === driver.nationality
+            );
+            console.log(matchedCountry)
+
+            if (matchedCountry) {
+                setNationalitySelected(matchedCountry);
+                setQuery(matchedCountry.name); 
+            }
+        }
+        setQuery( ""); 
+    }, [driver, isDisplayed]);
 
     useEffect(() => {
         const fetchFilteredCountries = async () => {
@@ -61,17 +91,20 @@ export default function AddDriverForm({ isDisplayed }: { isDisplayed: boolean })
 
     };
 
-    const handleDriverSubmit = () =>{
-        if(nationalitySelected && lastname.length > 0 && firstname.length > 0 && rating.length > 0){
-            axios.post("/api/drivers/add", {
+    const handleDriverSubmit = () => {
+        if (nationalitySelected && lastname.length > 0 && firstname.length > 0 && rating) {
+            axios.put("/api/drivers/update", {
+                idDriver: driver?.id,
                 firstname,
                 lastname,
                 rating,
+                picture: driver?.pictureLink,
                 nationality: nationalitySelected?.id
             }).then(() => {
-                alert("Pilote ajouté avec succès")
+                alert("Pilote modifié avec succès")
+                window.location.reload();
             })
-        }else{
+        } else {
             setErrorMessage("Veuillez remplir tous les champs obligatoires (*)")
         }
     }
@@ -82,7 +115,7 @@ export default function AddDriverForm({ isDisplayed }: { isDisplayed: boolean })
             <div className={`fixed top-[-200px] left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-in-out ${isAddFormDisplayed ? 'translate-y-1/2 opacity-100' : '-translate-y-full opacity-0'}  bg-white w-[400px] h-[700px] rounded-xl shadow-xl z-50`}>
                 <div className="w-full h-full grid grid-rows-[1fr_5fr_1fr] grid-cols-1">
                     <div className="row-span-1 row-start-1 ">
-                        <p>Ajout de pilote</p>
+                        <p className="text-2xl font-bold text-center pt-10">Ajout de pilote</p>
                     </div>
                     <div className="row-span-1 row-start-2 ">
                         <div className="flex flex-col mb-6">
@@ -124,7 +157,7 @@ export default function AddDriverForm({ isDisplayed }: { isDisplayed: boolean })
                         <div className="flex flex-col mb-6">
                             <label htmlFor="rating" className="justify-self-start ml-2 mb-2">Rating du pilote *</label>
                             <input
-                                className={`ratingInput w-[20%] border-b-2 ml-5  focus:outline-none py-2 px-3 placeholder:italic ${rating.length == 0 ? "border-red-500" : "border-black"}`}
+                                className={`ratingInput w-[20%] border-b-2 ml-5  focus:outline-none py-2 px-3 placeholder:italic ${!rating ? "border-red-500" : "border-black"}`}
                                 id="rating"
                                 type="number"
                                 min={0}

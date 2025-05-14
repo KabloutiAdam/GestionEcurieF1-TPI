@@ -14,11 +14,14 @@ app.use(express.json());
 
 // API routes
 const driverRoutes = require("./routes/drivers")
+const teamRoutes = require("./routes/teams")
 const authRoutes = require("./routes/auth");
 const countryRoutes = require("./routes/country")
 
 
+
 app.use("/api/drivers", driverRoutes);
+app.use("/api/teams", teamRoutes)
 app.use("/api/auth", authRoutes);
 app.use("/api/country", countryRoutes);
 

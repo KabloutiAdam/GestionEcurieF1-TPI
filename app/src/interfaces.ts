@@ -24,6 +24,12 @@ export type driverInterface = {
     countryFlag: string;
 }
 
+export type teamInterface = {
+    id: number;
+    name: string;
+    pictureLink: string;
+}
+
 export type country = {
     id: number;
     name: string;

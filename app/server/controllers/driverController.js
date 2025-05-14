@@ -48,3 +48,32 @@ exports.addDriver = async (req, res) => {
     });
 
 }
+
+exports.updateDriver = async (req, res) => {
+
+
+    let params = [
+        req.body.firstname,
+        req.body.lastname,
+        req.body.rating,
+        req.body.picture,
+        req.body.nationality,
+        req.body.idDriver
+    ];
+
+    const updateQuery = `
+        UPDATE t_drivers
+        SET driFirstname = ?, driLastname = ?, driRating = ?, driPictureLink = ?, fkCountry = ?
+        WHERE idDriver = ?;
+    `;
+
+      db.run(updateQuery, params, function (err) {
+        if (err) {
+            console.error("Erreur lors de la mise à jour :", err);
+            return res.status(500).json({ error: "Erreur serveur" });
+        }
+        return res.json({ success: true, });
+        
+    })
+
+}

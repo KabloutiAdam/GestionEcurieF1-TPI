@@ -7,6 +7,7 @@ import LoginPage from './pages/main/loginPage'
 import ProtectedRoute from './components/routeProtection'
 import { useAuth } from './authProvider'
 import DriversPage from './pages/main/driversPage'
+import TeamsPage from './pages/main/teamsPage'
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
 
 
         <Route path="/login" element={
-          currentUser !== null && currentUser !== undefined ? <Navigate to="/mainPage" /> : <LoginPage />} />
+          currentUser !== null && currentUser !== undefined ? <Navigate to="/mainPage" /> : <LoginPage />} />                  
 
         <Route path="/mainPage" element={
           <ProtectedRoute allowedRoles={['admin', 'user']}>
@@ -32,7 +33,7 @@ function App() {
           </ProtectedRoute>} />
         <Route path="/teams" element={
           <ProtectedRoute allowedRoles={['admin', 'user']}>
-            <MainPage />
+            <TeamsPage />
           </ProtectedRoute>} />
         <Route path="/drivers" element={
           <ProtectedRoute allowedRoles={['admin', 'user']}>

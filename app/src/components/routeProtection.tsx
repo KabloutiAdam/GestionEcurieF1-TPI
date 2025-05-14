@@ -26,7 +26,7 @@ export default function ProtectedRoute({ allowedRoles, children }: protectedRout
         currentUser === null ||
         (allowedRoles && !allowedRoles.includes(currentUser.role))
     ) {
-        console.log(currentUser)
+        
         return <Navigate to="/login" replace />;
     }
 
