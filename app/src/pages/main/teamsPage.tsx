@@ -39,7 +39,7 @@ export default function TeamsPage() {
         setIsModifyFormDisplayed(true);
     };
 
-    const addDriver = () => {
+    const addTeam = () => {
         setIsAddFormDisplayed(true)
     }
 
@@ -66,7 +66,7 @@ export default function TeamsPage() {
                         <p className="col-start-2 col-span-1 text-7xl font-bold text-center text-white">ECURIES</p>
                         {currentUser?.role === "admin" &&
                             <div className="w-full h-auto flex justify-end">
-                                <div onClick={addDriver} className="col-span-1 col-start-3 h-10 w-fit p-4 flex justify-center items-center rounded-2xl bg-red-600 mr-10 hover:shadow-xl hover:scale-110 duration-300 bg-opacity-50 transition-all hover:cursor-pointer">
+                                <div onClick={addTeam} className="col-span-1 col-start-3 h-10 w-fit p-4 flex justify-center items-center rounded-2xl bg-red-600 mr-10 hover:shadow-xl hover:scale-110 duration-300 bg-opacity-50 transition-all hover:cursor-pointer">
                                     <p className="text-xl font-bold text-center text-white">Ajouter une écurie</p>
                                 </div>
                             </div>
