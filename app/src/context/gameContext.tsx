@@ -10,6 +10,7 @@ type GameContextType = {
   selectedDrivers: driverInterface[];
   setSelectedDrivers: React.Dispatch<React.SetStateAction<driverInterface[]>>;
   gameState: string;
+  trackOrder: number;
   setGameState: React.Dispatch<React.SetStateAction<string>>;
   startSeason: () => Promise<void>;
 
@@ -21,6 +22,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [selectedTeam, setSelectedTeam] = useState<teamInterface | null>(null);
   const [selectedDrivers, setSelectedDrivers] = useState<driverInterface[]>([]);
   const [gameState, setGameState] = useState<string>("");
+  const [trackOrder, setTrackOrder] = useState<number>(1);
 
   const [driverList, setDriverList] = useState<driverInterface[]>([])
   const [teamList, setTeamList] = useState<teamInterface[]>([])
@@ -36,17 +38,18 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       const parsed = JSON.parse(settings);
       if (parsed[0]) setSelectedDrivers(parsed[0]);
       if (parsed[1]) setSelectedTeam(parsed[1]);
+      if (parsed[2]) setTrackOrder(parsed[2]);
     }
 
     if (state) {
       setGameState(state);
-      
     }
   }, []);
 
 
   async function startSeason() {
     setGameState("start")
+    localStorage.setItem("gameState", "start")
     localStorage.setItem("inGame", "true")
     const gameSettings = [selectedDrivers, selectedTeam]
 
@@ -133,7 +136,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
 
   return (
-    <GameContext.Provider value={{ selectedTeam, setSelectedTeam, selectedDrivers, setSelectedDrivers, startSeason, gameState,setGameState }}>
+    <GameContext.Provider value={{ selectedTeam, setSelectedTeam, selectedDrivers, setSelectedDrivers, startSeason, gameState, trackOrder,setGameState }}>
       {children}
     </GameContext.Provider>
   );

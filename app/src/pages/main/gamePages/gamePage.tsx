@@ -3,16 +3,18 @@ import Background from "../../../components/background";
 import NavBar from "../../../components/navBar/navBar";
 import { useGame } from "../../../context/gameContext";
 import axios from "axios";
-import type { driverInterface } from "../../../interfaces";
+import { type driverInterface, type trackInterface } from "../../../interfaces";
 
 
 
 
 export default function GamePage() {
 
-    const { setGameState, gameState, selectedDrivers } = useGame()
+    const { setGameState, gameState, selectedDrivers, trackOrder } = useGame()
 
     const [driverList, setDriverList] = useState<driverInterface[]>([])
+    const [trackList, setTrackList] = useState<trackInterface[]>([])
+    const [loadingValue, setLoadingValue] = useState<number>(0)
 
 
     useEffect(() => {
@@ -27,20 +29,55 @@ export default function GamePage() {
             }
         }
 
-        
+        const fetchTracks = async () => {
+            try {
+                const res = await axios.get("/api/tracks/")
+                setTrackList(res.data)
+
+            } catch (error) {
+                console.error(error)
+            }
+        }
 
 
+
+
+
+        fetchTracks()
         fetchDrivers()
     }, [])
 
     const handleStart = () => {
 
+
+        const settings = localStorage.getItem("gameSettings")
+        if (settings) {
+            const parsed = JSON.parse(settings)
+            const newSettings = [parsed[0], parsed[1], 1]
+            console.log(parsed)
+            localStorage.setItem("gameSettings", JSON.stringify(newSettings))
+        }
+
+        loadingRace()
+
+        
+
         setGameState("inRace")
+
         localStorage.setItem("gameState", "inRace")
         console.log(gameState)
-
-
     }
+
+    const loadingRace = async() => {
+        let i = 0;
+        const interval = setInterval(() => {
+            setLoadingValue(i); 
+            i++;
+            if (i > 300) {
+                clearInterval(interval);
+            }
+        }, 20);
+    };
 
     return (
 
@@ -94,10 +131,32 @@ export default function GamePage() {
                             )
                         }
 
-                        {gameState == "inRace" &&
+                        {gameState === "inRace" && trackList.length >= trackOrder && trackList[trackOrder - 1] &&
                             (
                                 <>
+                                    <div className="w-[90%] h-[70%] flex flex-col items-center " >
+                                        <div className="w-full h-100 flex flex-col items-center justify-center ">
+                                            <img
+                                                className="w-130"
+                                                src={`/images/tracks/${trackList[trackOrder - 1].pictureLink}`} alt="" />
+                                        </div>
+                                        <div>
+                                            <p className="text-2xl font-bold text-white">
+                                                {trackList[trackOrder - 1].name}
+                                            </p>
 
+
+
+                                        </div>
+
+                                        <div className="h-8 bg-gray-300 w-full rounded-md overflow-hidden">
+                                            <div
+                                                className="h-full bg-red-500 transition-all duration-300"
+                                                style={{ width: `${loadingValue/3}%` }}
+                                            />
+                                        </div>
+
+                                    </div>
 
                                 </>
 

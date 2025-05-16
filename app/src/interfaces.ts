@@ -35,3 +35,12 @@ export type country = {
     name: string;
     countryFlag: string,
 }
+
+export type trackInterface = {
+    id: number;
+    name: string;
+    length: number;
+    trackOrder: number;
+    pictureLink: string;
+    country: number
+}

@@ -17,6 +17,8 @@ const driverRoutes = require("./routes/drivers")
 const teamRoutes = require("./routes/teams")
 const authRoutes = require("./routes/auth");
 const countryRoutes = require("./routes/country")
+const trackRoutes = require("./routes/tracks")
+
 
 
 
@@ -24,6 +26,8 @@ app.use("/api/drivers", driverRoutes);
 app.use("/api/teams", teamRoutes)
 app.use("/api/auth", authRoutes);
 app.use("/api/country", countryRoutes);
+app.use("/api/tracks", trackRoutes)
+
 
 
 if (isProduction) {
