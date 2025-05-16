@@ -25,7 +25,7 @@ export default function DriverSelection() {
 
 
     const { currentUser } = useAuth()
-    const { selectedDrivers, setSelectedDrivers } = useGame()
+    const { selectedDrivers, setSelectedDrivers, selectedTeam, startSeason} = useGame()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -48,7 +48,7 @@ export default function DriverSelection() {
 
 
     useEffect(() => {
-
+        console.log(selectedTeam)
         console.log(selectedDrivers)
     }, [selectedDrivers])
 
@@ -57,6 +57,7 @@ export default function DriverSelection() {
     };
     const handleDriverSelection = (driver: driverInterface) => {
 
+        //FIFO
         setSelectedDrivers((prev) => {
             if (prev.find(d => d.id === driver.id)) {
                 return prev.filter(d => d.id !== driver.id);
@@ -72,8 +73,16 @@ export default function DriverSelection() {
 
 
     const handleNextPage = () => {
-        navigate("/game/driverSelection")
+        if(selectedDrivers.length === 2) {
+            setSelectedDrivers([])
+            startSeason()
+        }
+        else{
+            alert("Veuillez selectionner 2 pilotes")
+        }
     }
+        
+    
 
 
     return (
@@ -86,7 +95,7 @@ export default function DriverSelection() {
                     <div className=" w-[80%] h-[80%] bg-black flex flex-col items-center justify-center ">
                         <div className="w-full mt-3 h-12 flex justify-end items-center  ">
                             <div
-                                onClick={() => handleNextPage()}
+                                onClick={handleNextPage}
                                 className="w-30 h-10 mr-5 z-10 flex items-center justify-center rounded-md bg-red-600 text-white font-bold hover:cursor-pointer hover:bg-red-700 hover:text-white transition-all duration-300">
                                 Suivant
                             </div>

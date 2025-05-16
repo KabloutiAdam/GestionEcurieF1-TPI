@@ -67,13 +67,38 @@ exports.updateDriver = async (req, res) => {
         WHERE idDriver = ?;
     `;
 
-      db.run(updateQuery, params, function (err) {
+    db.run(updateQuery, params, function (err) {
         if (err) {
             console.error("Erreur lors de la mise à jour :", err);
             return res.status(500).json({ error: "Erreur serveur" });
         }
         return res.json({ success: true, });
-        
+
+    })
+
+}
+
+exports.updateDriverTeam = async (req, res) => {
+
+
+    let params = [
+        req.body.idTeam,
+        req.body.idDriver
+    ];
+
+    const updateQuery = `
+        UPDATE t_drivers
+        SET fkTeam = ?
+        WHERE idDriver = ?;
+    `;
+
+    db.run(updateQuery, params, function (err) {
+        if (err) {
+            console.error("Erreur lors de la mise à jour :", err);
+            return res.status(500).json({ error: "Erreur serveur" });
+        }
+        return res.json({ success: true, });
+
     })
 
 }

@@ -9,7 +9,7 @@ import { useAuth } from './authProvider'
 import DriversPage from './pages/main/driversPage'
 import TeamsPage from './pages/main/teamsPage'
 import ProtectedGame from './components/gameProtection'
-import GamePage from './pages/main/gamePages/teamSelection'
+import GamePage from './pages/main/gamePages/gamePage'
 import { GameProvider } from './context/gameContext'
 import TeamSelectionPage from './pages/main/gamePages/teamSelection'
 import DriverSelection from './pages/main/gamePages/driverSelection'
@@ -52,10 +52,16 @@ function App() {
               <TeamSelectionPage />
             </ProtectedGame>} />
 
-            <Route path="/game/driverSelection" element={
+          <Route path="/game/driverSelection" element={
 
             <ProtectedGame allowedRoles={['admin', 'user']}>
               <DriverSelection />
+            </ProtectedGame>} />
+
+
+          <Route path="/game/gamePage" element={
+            <ProtectedGame allowedRoles={['admin', 'user']}>
+              <GamePage />
             </ProtectedGame>} />
 
 

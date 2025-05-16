@@ -32,7 +32,12 @@ export default function TeamSelectionPage() {
 
 
     const handleTeamSelect = (team: teamInterface) => {
-        setSelectedTeam(team)
+        if(team.id == selectedTeam?.id){
+            setSelectedTeam(null)
+        }else{
+            setSelectedTeam(team)
+        }
+        
 
 
     }
@@ -42,8 +47,14 @@ export default function TeamSelectionPage() {
     }
 
     const handleNextPage = () =>{
-        navigate("/game/driverSelection")
+        if(selectedTeam){
+            navigate("/game/driverSelection")
+        }else{
+            alert("Veuillez sélectionner une équipe")
+        }
     }
+        
+    
 
     return (
 

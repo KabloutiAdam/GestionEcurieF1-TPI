@@ -18,7 +18,7 @@ export default function DriverCard({ driver, onEdit, onSelect }: Props) {
         <>
             <div
                 onClick={() => { if (pathname === "/game/driverSelection" && onSelect) { onSelect(driver) } }}
-                className={` grid grid-rows-[4fr_1fr_2fr] grid-cols-1 bg-black rounded-2xl ${pathname == '/game/driverSelection' ? "h-70 w-50 " : "h-100 w-150"}`}>
+                className={` grid grid-rows-[4fr_1fr_2fr] grid-cols-1 bg-black rounded-2xl ${pathname == '/game/driverSelection' ? "h-70 w-50 " : "h-90 w-80"}`}>
                 <div className="row-span-1 row-start-1 flex flex-row items-start justify-between ">
                     <div className="w-[70%] flex flex-row items-start justify-between">
                         <img className="rounded-2xl" src={`../../images/drivers/${driver.pictureLink}`} alt={`image de ${driver.firstname} ${driver.lastname}`} />
