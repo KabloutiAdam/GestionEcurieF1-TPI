@@ -11,7 +11,9 @@ type GameContextType = {
   setSelectedDrivers: React.Dispatch<React.SetStateAction<driverInterface[]>>;
   gameState: string;
   trackOrder: number;
+  raceResult: driverInterface[] | null;
   setGameState: React.Dispatch<React.SetStateAction<string>>;
+  raceSimulation: () => Promise<void>;
   startSeason: () => Promise<void>;
 
 };
@@ -23,9 +25,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [selectedDrivers, setSelectedDrivers] = useState<driverInterface[]>([]);
   const [gameState, setGameState] = useState<string>("");
   const [trackOrder, setTrackOrder] = useState<number>(1);
+  const [raceResult, SetRaceResult] = useState<driverInterface[]>([])
 
   const [driverList, setDriverList] = useState<driverInterface[]>([])
   const [teamList, setTeamList] = useState<teamInterface[]>([])
+
+  const pointDistribution = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]
 
 
   const navigate = useNavigate()
@@ -130,13 +135,39 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   async function raceSimulation() {
 
 
+    try {
+      const resDrivers = await axios.get("/api/drivers");
+
+      const driverListRace: driverInterface[] = resDrivers.data;
+
+      driverListRace.forEach((driver: driverInterface) => {
+        driver.rating = driver.rating + (Math.floor(Math.random() * 41) - 20)
+      })
+
+      SetRaceResult(driverListRace.sort((a, b) => b.rating - a.rating))
+
+      for (let i = 0; i < pointDistribution.length; i++) {
+        driverListRace[i].point += pointDistribution[i]
+        await axios.put('/api/drivers/updatePoints',
+          {
+            idDriver: driverListRace[i].id,
+            points: driverListRace[i].point
+          }
+        )
+      }
+
+      console.log(driverListRace)
+    } catch (error) {
+      console.error("erreur")
+    }
+
 
   }
 
 
 
   return (
-    <GameContext.Provider value={{ selectedTeam, setSelectedTeam, selectedDrivers, setSelectedDrivers, startSeason, gameState, trackOrder,setGameState }}>
+    <GameContext.Provider value={{ selectedTeam, raceResult, setSelectedTeam, selectedDrivers, setSelectedDrivers, startSeason, raceSimulation, gameState, trackOrder, setGameState }}>
       {children}
     </GameContext.Provider>
   );

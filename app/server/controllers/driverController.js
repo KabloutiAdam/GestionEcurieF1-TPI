@@ -3,7 +3,7 @@ const db = require('../db')
 exports.getAllDrivers = async (req, res) => {
 
     let baseQuery = `
-        SELECT idDriver as id, driFirstname as firstname, driLastname as lastname, driRating as rating, couName as nationality, couLogoLink as countryFlag, teaName as team, driPictureLink as pictureLink FROM t_drivers d
+        SELECT idDriver as id, driFirstname as firstname, driLastname as lastname, driRating as rating, couName as nationality, couLogoLink as countryFlag, teaName as team, driPictureLink as pictureLink, driPoint as point FROM t_drivers d
         JOIN t_country c ON c.idCountry = d.fkCountry
         LEFT JOIN t_teams t ON t.idTeam = d.fkTeam
         ORDER BY d.idDriver ASC;
@@ -101,4 +101,27 @@ exports.updateDriverTeam = async (req, res) => {
 
     })
 
+}
+
+exports.updateDriverPoints = async (req, res) => {
+
+   
+    let params = [
+        req.body.points,
+        req.body.idDriver
+    ]
+    const updateQuery = `
+        UPDATE t_drivers
+        SET driPoint = ?
+        WHERE idDriver = ?;
+    `;
+
+    db.run(updateQuery, params, function (err) {
+        if (err) {
+            console.error("Erreur lors de la mise à jour :", err);
+            return res.status(500).json({ error: "Erreur serveur" });
+        }
+        return res.json({ success: true, });
+
+    })
 }

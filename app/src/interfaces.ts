@@ -22,6 +22,7 @@ export type driverInterface = {
     team: string;
     pictureLink: string;
     countryFlag: string;
+    point: number
 }
 
 export type teamInterface = {
