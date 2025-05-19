@@ -29,6 +29,7 @@ export type teamInterface = {
     id: number;
     name: string;
     pictureLink: string;
+    nbPoint: number;
 }
 
 export type country = {
@@ -44,4 +45,5 @@ export type trackInterface = {
     trackOrder: number;
     pictureLink: string;
     country: number
+    trackCountryPicture: string;
 }

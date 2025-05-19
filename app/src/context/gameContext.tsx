@@ -38,6 +38,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const settings = localStorage.getItem("gameSettings");
     const state = localStorage.getItem("gameState");
+    const savedResult = localStorage.getItem("raceResult");
+
+    if(savedResult){
+      const saved = JSON.parse(savedResult)
+      SetRaceResult(saved)
+    }
 
     if (settings) {
       const parsed = JSON.parse(settings);
@@ -49,7 +55,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     if (state) {
       setGameState(state);
     }
-  }, []);
+  }, [gameState]);
 
 
   async function startSeason() {
@@ -145,7 +151,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       })
 
       SetRaceResult(driverListRace.sort((a, b) => b.rating - a.rating))
-
+      console.log(driverListRace)
       for (let i = 0; i < pointDistribution.length; i++) {
         driverListRace[i].point += pointDistribution[i]
         await axios.put('/api/drivers/updatePoints',
@@ -156,7 +162,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         )
       }
 
+      localStorage.setItem("raceResult", JSON.stringify(driverListRace));
       console.log(driverListRace)
+
+    
     } catch (error) {
       console.error("erreur")
     }

@@ -119,7 +119,7 @@ export default function EditDriverForm({ isDisplayed, driver }: Props) {
                     </div>
                     <div className="row-span-1 row-start-2 ">
                         <div className="flex flex-col mb-6">
-                            <label htmlFor="firstname" className="justify-self-start ml-2 mb-2">Nom du pilote *</label>
+                            <label htmlFor="firstname" className="justify-self-start ml-2 mb-2">Prénom du pilote *</label>
                             <input
                                 className={`w-[70%] border-b-2 ml-5  focus:outline-none py-2 px-3 placeholder:italic ${firstname.length == 0 ? "border-red-500" : "border-black"}`}
                                 id="firstname"
@@ -137,7 +137,7 @@ export default function EditDriverForm({ isDisplayed, driver }: Props) {
                             />
                         </div>
                         <div className="flex flex-col mb-6">
-                            <label htmlFor="rating" className="justify-self-start ml-2 mb-2">Prénom du pilote *</label>
+                            <label htmlFor="rating" className="justify-self-start ml-2 mb-2">Nom du pilote *</label>
                             <input
                                 className={`w-[70%] border-b-2 ml-5  focus:outline-none py-2 px-3 placeholder:italic ${lastname.length == 0 ? "border-red-500" : "border-black"}`}
                                 id="lastname"
