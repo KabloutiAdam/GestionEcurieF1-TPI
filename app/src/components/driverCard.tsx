@@ -1,6 +1,7 @@
 import { useLocation } from "react-router";
 import { useAuth } from "../authProvider";
 import type { driverInterface } from "../interfaces";
+import { useEffect, useState } from "react";
 
 type Props = {
     driver: driverInterface;
@@ -10,8 +11,20 @@ type Props = {
 
 export default function DriverCard({ driver, onEdit, onSelect }: Props) {
 
-    const { currentUser } = useAuth();
+    const { authToken } = useAuth();
     const { pathname } = useLocation();
+    const [userRole, setUserRole] = useState<string | null>(null)
+
+    useEffect(() => {
+            if (authToken) {
+                try {
+                    const decoded = JSON.parse(atob(authToken.split('.')[1]));
+                    setUserRole(decoded.role);
+                } catch (e) {
+                    console.error("Erreur lors du décodage du token :", e);
+                }
+            }
+        }, [authToken]);
 
 
     return (
@@ -23,7 +36,7 @@ export default function DriverCard({ driver, onEdit, onSelect }: Props) {
                     <div className="w-[70%] flex flex-row items-start justify-between">
                         <img className="rounded-2xl" src={`../../images/drivers/${driver.pictureLink}`} alt={`image de ${driver.firstname} ${driver.lastname}`} />
                     </div>
-                    {(currentUser?.role === "admin" && pathname != "/game/driverSelection") &&
+                    {(userRole === "admin" && pathname != "/game/driverSelection") &&
                         <div
                             onClick={() => onEdit(driver)}
                             className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">

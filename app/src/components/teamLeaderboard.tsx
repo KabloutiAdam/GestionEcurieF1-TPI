@@ -15,7 +15,7 @@ export default function TeamLeaderboard({ driverList }: Props) {
     useEffect(() => {
         const fetchTeam = async () => {
             try {
-                const res = await axios.get("/api/teams"); // <-- attention, ici tu appelais /api/drivers !
+                const res = await axios.get("/api/teams"); 
                 setTeamList(res.data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des équipes :", error);
@@ -28,13 +28,13 @@ export default function TeamLeaderboard({ driverList }: Props) {
     const computedTeamList = useMemo(() => {
         if (!teamList || !driverList) return [];
 
-        // Clone la liste des teams avec nbPoint = 0
+        
         const updatedTeams = teamList.map(team => ({
             ...team,
             nbPoint: 0
         }));
 
-        // Ajoute les points des pilotes à leur team
+       
         driverList.forEach(driver => {
             const team = updatedTeams.find(t => t.name === driver.team);
             if (team) {
@@ -42,7 +42,7 @@ export default function TeamLeaderboard({ driverList }: Props) {
             }
         });
 
-        // Trie par nbPoint décroissant
+        
         return updatedTeams.sort((a, b) => b.nbPoint - a.nbPoint);
 
     }, [teamList, driverList]);

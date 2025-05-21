@@ -1,7 +1,7 @@
 import { useLocation } from "react-router";
 import { useAuth } from "../authProvider";
 import type { teamInterface } from "../interfaces";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 type Props = {
@@ -12,9 +12,21 @@ type Props = {
 
 export default function TeamCard({ team, onEdit, onSelect }: Props) {
 
-    const { currentUser } = useAuth();
+    const { currentUser, authToken } = useAuth();
     const { pathname } = useLocation();
-    console.log(team.pictureLink)
+    const [userRole, setUserRole] = useState<string | null>(null)
+
+
+     useEffect(() => {
+        if (authToken) {
+            try {
+                const decoded = JSON.parse(atob(authToken.split('.')[1]));
+                setUserRole(decoded.role);
+            } catch (e) {
+                console.error("Erreur lors du décodage du token :", e);
+            }
+        }
+    }, [authToken]);
 
 
 
@@ -23,7 +35,7 @@ export default function TeamCard({ team, onEdit, onSelect }: Props) {
         <>
             <div className={` grid grid-rows-[1fr_4fr_2fr] grid-cols-1 bg-black rounded-2xl ${pathname == '/game/teamSelection' ? "h-60 w-80 " : "h-100 w-150"}`}>
                 <div className="row-span-1 row-start-1 flex flex-row items-start justify-end ">
-                    {(currentUser?.role === "admin" && pathname != "/game/teamSelection") &&
+                    {(userRole === "admin" && pathname != "/game/teamSelection") &&
                         <div
                             onClick={() => onEdit(team)}
                             className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">

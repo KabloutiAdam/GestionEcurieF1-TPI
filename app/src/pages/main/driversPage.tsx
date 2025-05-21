@@ -22,8 +22,8 @@ export default function DriversPage() {
 
     const [isModifyFormDisplayed, setIsModifyFormDisplayed] = useState(false);
     const [selectedDriver, setSelectedDriver] = useState<driverInterface | null>(null);
-
-    const { currentUser } = useAuth()
+    const [userRole, setUserRole] = useState<string | null>(null)
+    const { authToken } = useAuth();
 
     useEffect(() => {
         const fetchDrivers = async () => {
@@ -38,10 +38,21 @@ export default function DriversPage() {
 
         fetchDrivers()
 
-
-
-
     }, [])
+
+
+    useEffect(() => {
+        if (authToken) {
+            try {
+                const decoded = JSON.parse(atob(authToken.split('.')[1]));
+                setUserRole(decoded.role);
+            } catch (e) {
+                console.error("Erreur lors du décodage du token :", e);
+            }
+        }
+    }, [authToken]);
+
+
 
     const handleEditDriver = (driver: driverInterface) => {
         setSelectedDriver(driver);
@@ -59,7 +70,7 @@ export default function DriversPage() {
             <Background>
                 <NavBar activeTab="drivers" />
 
-                {currentUser?.role === "admin" &&
+                {userRole === "admin" &&
                     <>
                         <AddDriverForm isDisplayed={isAddFormDisplayed} />
                         <EditDriverForm isDisplayed={isModifyFormDisplayed} driver={selectedDriver} />
@@ -76,7 +87,7 @@ export default function DriversPage() {
                 <main className="pt-25 w-full h-screen flex justify-center flex-col items-center">
                     <div className="h-20 w-full display-flex justify-center items-center mt-20 grid grid-cols-[1fr_2fr_1fr]">
                         <p className="col-start-2 col-span-1 text-7xl font-bold text-center text-white">PILOTES</p>
-                        {currentUser?.role === "admin" &&
+                        {userRole === "admin" &&
                             <div className="w-full h-auto flex justify-end">
                                 <div onClick={addDriver} className="col-span-1 col-start-3 h-10 w-fit p-4 flex justify-center items-center rounded-2xl bg-red-600 mr-10 hover:shadow-xl hover:scale-110 duration-300 bg-opacity-50 transition-all hover:cursor-pointer">
                                     <p className="text-xl font-bold text-center text-white">Ajouter un pilote</p>

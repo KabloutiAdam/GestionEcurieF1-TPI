@@ -27,7 +27,7 @@ export default function DriverSelection() {
     const { currentUser } = useAuth()
     const { selectedDrivers, setSelectedDrivers, selectedTeam, startSeason} = useGame()
     const navigate = useNavigate()
-
+    
     useEffect(() => {
         const fetchDrivers = async () => {
             try {

@@ -11,6 +11,7 @@ type GameContextType = {
   setSelectedDrivers: React.Dispatch<React.SetStateAction<driverInterface[]>>;
   gameState: string;
   trackOrder: number;
+  dnfDriver: driverInterface[] | null
   raceResult: driverInterface[] | null;
   setGameState: React.Dispatch<React.SetStateAction<string>>;
   raceSimulation: () => Promise<void>;
@@ -26,6 +27,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [gameState, setGameState] = useState<string>("");
   const [trackOrder, setTrackOrder] = useState<number>(1);
   const [raceResult, SetRaceResult] = useState<driverInterface[]>([])
+  const [dnfDriver, setDnfDriver] = useState<driverInterface[]>([])
 
   const [driverList, setDriverList] = useState<driverInterface[]>([])
   const [teamList, setTeamList] = useState<teamInterface[]>([])
@@ -40,9 +42,10 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     const state = localStorage.getItem("gameState");
     const savedResult = localStorage.getItem("raceResult");
 
-    if(savedResult){
+    if (savedResult) {
       const saved = JSON.parse(savedResult)
-      SetRaceResult(saved)
+      SetRaceResult(saved[0])
+      setDnfDriver(saved[1])
     }
 
     if (settings) {
@@ -150,6 +153,22 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         driver.rating = driver.rating + (Math.floor(Math.random() * 41) - 20)
       })
 
+      let nbDNF = Math.floor(Math.random() * driverListRace.length / 7) + 2;
+
+      let dnfDriver: driverInterface[] = []
+
+      for (let i = 0; i < nbDNF; i++) {
+        let dnfIndex = Math.floor(Math.random() * driverListRace.length)
+
+        dnfDriver.push(driverListRace[dnfIndex])
+        driverListRace.splice(dnfIndex, 1)
+
+
+      }
+      setDnfDriver(dnfDriver)
+      console.log(dnfDriver)
+
+
       SetRaceResult(driverListRace.sort((a, b) => b.rating - a.rating))
       console.log(driverListRace)
       for (let i = 0; i < pointDistribution.length; i++) {
@@ -162,10 +181,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         )
       }
 
-      localStorage.setItem("raceResult", JSON.stringify(driverListRace));
+      const resultToSave = [driverListRace, dnfDriver]
+      localStorage.setItem("raceResult", JSON.stringify(resultToSave));
       console.log(driverListRace)
 
-    
+
     } catch (error) {
       console.error("erreur")
     }
@@ -176,7 +196,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
 
   return (
-    <GameContext.Provider value={{ selectedTeam, raceResult, setSelectedTeam, selectedDrivers, setSelectedDrivers, startSeason, raceSimulation, gameState, trackOrder, setGameState }}>
+    <GameContext.Provider value={{ selectedTeam, dnfDriver, raceResult, setSelectedTeam, selectedDrivers, setSelectedDrivers, startSeason, raceSimulation, gameState, trackOrder, setGameState }}>
       {children}
     </GameContext.Provider>
   );

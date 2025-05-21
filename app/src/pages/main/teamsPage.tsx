@@ -16,7 +16,8 @@ export default function TeamsPage() {
     const [isAddFormDisplayed, setIsAddFormDisplayed] = useState(false)
     const [isModifyFormDisplayed, setIsModifyFormDisplayed] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState<teamInterface | null>(null);
-    const { currentUser } = useAuth()
+    const [userRole, setUserRole] = useState<string | null>(null)
+    const { authToken } = useAuth();
 
     useEffect(() => {
         const fetchDrivers = async () => {
@@ -33,6 +34,17 @@ export default function TeamsPage() {
 
     }, [])
 
+    useEffect(() => {
+        if (authToken) {
+            try {
+                const decoded = JSON.parse(atob(authToken.split('.')[1]));
+                setUserRole(decoded.role);
+            } catch (e) {
+                console.error("Erreur lors du décodage du token :", e);
+            }
+        }
+    }, [authToken]);
+
 
     const handleEditTeam = (team: teamInterface) => {
         setSelectedTeam(team);
@@ -48,13 +60,13 @@ export default function TeamsPage() {
         <>
             <Background>
                 <NavBar activeTab="teams" />
-                {currentUser?.role === "admin" &&
+                {userRole === "admin" &&
                     <>
                         <AddTeamForm isDisplayed={isAddFormDisplayed} />
                         <EditTeamForm isDisplayed={isModifyFormDisplayed} team={selectedTeam} />
                     </>
                 }
-                {(isAddFormDisplayed || isModifyFormDisplayed)&& (
+                {(isAddFormDisplayed || isModifyFormDisplayed) && (
                     <div className="fixed inset-0 z-40  bg-opacity-40 backdrop-blur-sm flex justify-center items-start pt-20 duration-500"
                         onClick={() => { setIsAddFormDisplayed(false); setIsModifyFormDisplayed(false) }}>
                     </div>
@@ -64,7 +76,7 @@ export default function TeamsPage() {
                 <main className="pt-25 w-full h-screen flex justify-center flex-col items-center">
                     <div className="h-20 w-full display-flex justify-center items-center mt-20 grid grid-cols-[1fr_2fr_1fr]">
                         <p className="col-start-2 col-span-1 text-7xl font-bold text-center text-white">ECURIES</p>
-                        {currentUser?.role === "admin" &&
+                        {userRole === "admin" &&
                             <div className="w-full h-auto flex justify-end">
                                 <div onClick={addTeam} className="col-span-1 col-start-3 h-10 w-fit p-4 flex justify-center items-center rounded-2xl bg-red-600 mr-10 hover:shadow-xl hover:scale-110 duration-300 bg-opacity-50 transition-all hover:cursor-pointer">
                                     <p className="text-xl font-bold text-center text-white">Ajouter une écurie</p>
@@ -79,7 +91,7 @@ export default function TeamsPage() {
                             <>
 
                                 <div className="w-fit h-fit border-2 rounded-2xl border-red-700 mr-5 mt-10 ml-5 mb-30 duration-150 hover:scale-110 hover:cursor-pointer">
-                                    <TeamCard team={team} onEdit={handleEditTeam}/>
+                                    <TeamCard team={team} onEdit={handleEditTeam} />
                                 </div>
 
                             </>
