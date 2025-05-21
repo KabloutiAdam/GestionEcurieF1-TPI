@@ -119,7 +119,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
 
       });
-      console.log()
+      
+      axios.post("/api/drivers/updateTeam", {
+            idDriver: tempDriverArray[0].id,
+            idTeam: null,
+          }).catch(err => {
+            console.error(`Erreur lors de l'affectation de ${tempDriverArray[0].firstname}`, err);
+          });
 
 
     } catch (error) {
@@ -145,7 +151,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
 
     try {
-      const resDrivers = await axios.get("/api/drivers");
+      const resDrivers = await axios.get("/api/drivers/getDriverInATeam");
 
       const driverListRace: driverInterface[] = resDrivers.data;
 

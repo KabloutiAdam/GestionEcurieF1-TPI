@@ -29,7 +29,7 @@ export default function GamePage() {
 
         const fetchDrivers = async () => {
             try {
-                const res = await axios.get("/api/drivers/")
+                const res = await axios.get("/api/drivers/getDriverInATeam")
                 setDriverList(res.data)
                 return res.data;
 
@@ -446,7 +446,7 @@ export default function GamePage() {
                                             onClick={trackOrder == trackList.length ? handleEndSeason : handleNextRace}
                                             className="w-90 h-15 mr-5 mt-4 z-10 flex items-center justify-center rounded-md bg-red-600 text-white font-bold hover:cursor-pointer hover:bg-red-700 hover:text-white transition-all duration-300"
                                         >
-                                            Passer à la prochaine course
+                                            <p>{trackOrder == trackList.length ? "Voir le classement final de la saison" : "Passer à la prochaine course"}</p>
                                         </div>
                                     </div>
                                 </div>

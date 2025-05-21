@@ -115,7 +115,7 @@ export default function EditDriverForm({ isDisplayed, driver }: Props) {
             <div className={`fixed top-[-200px] left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-in-out ${isAddFormDisplayed ? 'translate-y-1/2 opacity-100' : '-translate-y-full opacity-0'}  bg-white w-[400px] h-[700px] rounded-xl shadow-xl z-50`}>
                 <div className="w-full h-full grid grid-rows-[1fr_5fr_1fr] grid-cols-1">
                     <div className="row-span-1 row-start-1 ">
-                        <p className="text-2xl font-bold text-center pt-10">Ajout de pilote</p>
+                        <p className="text-2xl font-bold text-center pt-10">Modification de pilote</p>
                     </div>
                     <div className="row-span-1 row-start-2 ">
                         <div className="flex flex-col mb-6">

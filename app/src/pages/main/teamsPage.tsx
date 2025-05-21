@@ -72,9 +72,10 @@ export default function TeamsPage() {
                     </div>
                 )}
 
-
-                <main className="pt-25 w-full h-screen flex justify-center flex-col items-center">
-                    <div className="h-20 w-full display-flex justify-center items-center mt-20 grid grid-cols-[1fr_2fr_1fr]">
+                
+                <main className="pt-10 w-full h-screen flex justify-center flex-col items-center">
+                    <a href="/mainPage" className="w-[80%] text-xl italic font-bold text-white text-start underline mt-20">Retourner au menu principal</a>
+                    <div className="h-10 w-full display-flex justify-center items-center mt-20 grid grid-cols-[1fr_2fr_1fr]">
                         <p className="col-start-2 col-span-1 text-7xl font-bold text-center text-white">ECURIES</p>
                         {userRole === "admin" &&
                             <div className="w-full h-auto flex justify-end">

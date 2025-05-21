@@ -51,7 +51,7 @@ export default function DriverCard({ driver, onEdit, onSelect }: Props) {
                 </div>
                 <div className="row-span-1 row-start-3 ">
                     <div className="flex justify-around items-center text-white ">
-                        <img className=" rounded-2xl" src={`../images/pays/${driver.countryFlag}`} alt="" />
+                        <img className=" h-15 rounded-2xl" src={`../images/pays/${driver.countryFlag}`} alt="" />
                         <p className="text-4xl font-bold text-white">{driver.rating}</p>
                     </div>
                 </div>

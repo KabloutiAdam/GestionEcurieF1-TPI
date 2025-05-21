@@ -87,7 +87,7 @@ export default function FinalLeaderBoard({ driverList, isResult, isDriver }: Pro
                                             <img className="h-50" src={`/images/drivers/${orderedDrivers[1].pictureLink}`} alt="" />
                                         </div>
                                         <div className="w-full h-[30%] flex flex-col justify-center items-center">
-                                            <p className="text-2xl font-bold text-white">{orderedDrivers[1].firstname + " " + orderedDrivers[2].lastname}</p>
+                                            <p className="text-2xl font-bold text-white">{orderedDrivers[1].firstname + " " + orderedDrivers[1].lastname}</p>
                                             <p className="text-2xl font-bold text-white italic">{orderedDrivers[1].team}</p>
                                         </div>
 
@@ -107,7 +107,7 @@ export default function FinalLeaderBoard({ driverList, isResult, isDriver }: Pro
                                             <img className="h-50" src={`/images/drivers/${orderedDrivers[0].pictureLink}`} alt="" />
                                         </div>
                                         <div className="w-full h-[30%] flex flex-col justify-center items-center">
-                                            <p className="text-2xl font-bold text-white">{orderedDrivers[0].firstname + " " + orderedDrivers[2].lastname}</p>
+                                            <p className="text-2xl font-bold text-white">{orderedDrivers[0].firstname + " " + orderedDrivers[0].lastname}</p>
                                             <p className="text-2xl font-bold text-white italic">{orderedDrivers[0].team}</p>
                                         </div>
 
