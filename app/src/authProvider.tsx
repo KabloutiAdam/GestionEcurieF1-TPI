@@ -8,7 +8,6 @@ import {
 } from 'react';
 import type { PropsWithChildren } from 'react';
 
-
 type AuthContext = {
     authToken?: string | null;
     currentUser?: user | null;
@@ -23,73 +22,76 @@ const AuthContext = createContext<AuthContext | undefined>(undefined);
 type AuthProviderProps = PropsWithChildren;
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-    const [authToken, setAuthToken] = useState<string | null>();
-    const [currentUser, setCurrentUser] = useState<user | null>();
+    const [authToken, setAuthToken] = useState<string | null>(() => localStorage.getItem("userToken") || null);
+    const [currentUser, setCurrentUser] = useState<user | null>(null);
     const [isUserConnected, setIsUserConnected] = useState<boolean>(!!authToken);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    
-
     useEffect(() => {
+        async function fetchUser() {
+            const token = localStorage.getItem("userToken");
+            if (!token) {
+                setIsLoading(false);
+                return;
+            }
 
-        async function fetchUser(){
+            try {
+                const response = await getUser(); 
+                const user = response[1].user;
 
-            
-            try{
-                
-                const response = await getUser()
-
-                const { authToken, user } = response[1];
-                
-                setAuthToken(authToken);
-                setCurrentUser(user);
+                setAuthToken(token);
+                setCurrentUser({
+                    id: user.id,
+                    login: user.email,
+                    role: user.role,
+                });
                 setIsUserConnected(true);
-                
-            } catch{
+            } catch (error) {
+                console.error("Erreur getUser :", error);
                 setAuthToken(null);
                 setCurrentUser(null);
                 setIsUserConnected(false);
-            } finally{
-                
+            } finally {
                 setIsLoading(false);
             }
-
         }
 
-        fetchUser()
-        
+        fetchUser();
     }, []);
 
     async function handleLogin(email: string, password: string) {
         try {
             const response = await login(email, password);
+            const authToken = response[1].token;
 
-            const { authToken, user } = response[1];
-            console.log(user)
             setAuthToken(authToken);
-            setCurrentUser(user);
-            setIsUserConnected(true)
-            localStorage.setItem("authUser", JSON.stringify(user));
-            localStorage.setItem('userToken', authToken)
-            return null
+            setIsUserConnected(true);
+            localStorage.setItem('userToken', authToken);
+            try {
+                const decoded = JSON.parse(atob(authToken.split('.')[1]));
+                setCurrentUser({
+                    id: decoded.id,
+                    login: decoded.email,
+                    role: decoded.role,
+                });
+            } catch (err) {
+                console.error("Erreur décodage token :", err);
+            }
 
+            return null;
         } catch {
             setAuthToken(null);
             setCurrentUser(null);
-            return "erreur"
+            setIsUserConnected(false);
+            return "erreur";
         }
-
-
-
-
     }
 
     async function handleLogout() {
         localStorage.removeItem("userToken");
-        localStorage.removeItem("authUser");
-        setIsUserConnected(false)
+        setIsUserConnected(false);
         setAuthToken(null);
-        setCurrentUser(undefined);
+        setCurrentUser(null);
     }
 
     return (
@@ -110,10 +112,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
 export function useAuth() {
     const context = useContext(AuthContext);
-
     if (context === undefined) {
         throw new Error('useAuth must be used inside of a AuthProvider');
     }
-
     return context;
 }

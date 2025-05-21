@@ -2,15 +2,14 @@
 
 
 export async function getUser() {
-  const storedUser = localStorage.getItem("authUser");
+  
   const authToken = localStorage.getItem("userToken")
 
-  if (storedUser && authToken) {
+  if (authToken) {
 
+    const user = JSON.parse(atob(authToken.split('.')[1]));
 
-    const user = JSON.parse(storedUser);
-
-    return [200, { authToken, user }] as const;
+    return [200, { user }] as const;
   }
 
   return [401, { authToken: null, user: null }] as const;
@@ -39,7 +38,3 @@ export async function login(email: string, password: string) {
 }
 
 
-// @ts-ignore
-function generateAuthToken() {
-  return Math.random().toString(36).substring(2);
-}

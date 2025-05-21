@@ -1,5 +1,8 @@
 const db = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const SECRET_KEY = process.env.SECRET_JWT_KEY
 
 exports.loginUser = (req, res) => {
     const { login, password } = req.body;
@@ -29,15 +32,18 @@ exports.loginUser = (req, res) => {
                     return res.status(401).json({ error: "Mot de passe incorrect" });
                 }
 
-                const authToken = Math.random().toString(36).substring(2);
-
-                return res.status(200).json({
-                    authToken,
-                    user: {
+                const token = jwt.sign(
+                    {
                         id: row.idUser,
-                        login: row.useEmail,
+                        email: row.useEmail,
                         role: row.useRole,
                     },
+                    SECRET_KEY,
+                    { expiresIn: "2h" }
+                );
+                
+                return res.status(200).json({
+                    token
                 });
             });
         }
