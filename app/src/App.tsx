@@ -13,6 +13,7 @@ import GamePage from './pages/main/gamePages/gamePage'
 import { GameProvider } from './context/gameContext'
 import TeamSelectionPage from './pages/main/gamePages/teamSelection'
 import DriverSelection from './pages/main/gamePages/driverSelection'
+import TracksPage from './pages/main/tracksPage'
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
 
           <Route path="/tracks" element={
             <ProtectedRoute allowedRoles={['admin', 'user']}>
-              <MainPage />
+              <TracksPage />
             </ProtectedRoute>} />
           <Route path="/teams" element={
             <ProtectedRoute allowedRoles={['admin', 'user']}>

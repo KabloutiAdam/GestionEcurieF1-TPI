@@ -52,9 +52,10 @@ export default function DriverSelection() {
         console.log(selectedDrivers)
     }, [selectedDrivers])
 
-    const handleEditDriver = () => {
+    const handleEditDriver = () => {                                                                                     
 
     };
+
     const handleDriverSelection = (driver: driverInterface) => {
 
         //FIFO
@@ -62,7 +63,6 @@ export default function DriverSelection() {
             if (prev.find(d => d.id === driver.id)) {
                 return prev.filter(d => d.id !== driver.id);
             }
-
             if (prev.length < 2) {
                 return [...prev, driver];
             }

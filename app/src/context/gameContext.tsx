@@ -80,9 +80,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
       const tempDriverArray: driverInterface[] = filteredDriverList;
       const tempTeamArray: teamInterface[] = resTeams.data;
-
+      // ForEach team 
       tempTeamArray.forEach(team => {
-
+        // if the id matches the selected team id, edit the driver's team assigned 
         if (team.id === selectedTeam?.id) {
           for (const driver of selectedDrivers) {
             axios.post("/api/drivers/updateTeam", {
@@ -95,16 +95,13 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
           return
         }
 
-
-
         const teamDrivers: driverInterface[] = [];
-
+        // 2 drivers per team 
         for (let i = 0; i < 2; i++) {
           if (tempDriverArray.length === 0) break;
-
+          // select a random number, this will be the index of the driver to assign to the team
           const randomIndex = Math.floor(Math.random() * tempDriverArray.length);
           const selectedDriver = tempDriverArray[randomIndex];
-
 
           axios.post("/api/drivers/updateTeam", {
             idDriver: selectedDriver.id,
@@ -112,21 +109,17 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
           }).catch(err => {
             console.error(`Erreur lors de l'affectation de ${selectedDriver.firstname}`, err);
           });
-
           teamDrivers.push(selectedDriver);
           tempDriverArray.splice(randomIndex, 1);
         }
-
-
       });
-      
+      // drivers that are leftover are set to null
       axios.post("/api/drivers/updateTeam", {
-            idDriver: tempDriverArray[0].id,
-            idTeam: null,
-          }).catch(err => {
-            console.error(`Erreur lors de l'affectation de ${tempDriverArray[0].firstname}`, err);
-          });
-
+        idDriver: tempDriverArray[0].id,
+        idTeam: null,
+      }).catch(err => {
+        console.error(`Erreur lors de l'affectation de ${tempDriverArray[0].firstname}`, err);
+      });
 
     } catch (error) {
       console.error("erreur")

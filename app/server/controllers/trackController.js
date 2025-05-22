@@ -7,6 +7,7 @@ exports.getAllTracks = async (req, res) => {
         FROM t_tracks t
         LEFT JOIN t_country c ON c.idCountry = t.fkCountry
         ORDER BY traOrder ASC
+        LIMIT 5;
         `;
 
 

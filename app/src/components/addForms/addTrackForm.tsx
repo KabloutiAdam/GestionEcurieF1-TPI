@@ -1,62 +1,44 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { country, driverInterface, teamInterface } from "../../interfaces";
 
-type Props = {
-    team: teamInterface | null;
-    isDisplayed: boolean
-}
 
-export default function EditTeamForm({ isDisplayed, team }: Props) {
+export default function AddTrackForm({ isDisplayed }: { isDisplayed: boolean }) {
 
     const [isAddFormDisplayed, setIsAddFormDisplayed] = useState(isDisplayed)
-    const [name, setName] = useState(team?.name || "")
-    const [query, setQuery] = useState("")
+    const [name, setName] = useState("")
+   
     const [errorMessage, setErrorMessage] = useState("")
 
- 
-
+    
 
     useEffect(() => {
         setIsAddFormDisplayed(isDisplayed)
-       
+
     }, [isDisplayed])
 
-    useEffect(() => {
-        if (team) {
-            setName(team.name);
-            
-
-        }
-    }, [team]);
-
-  
-
     
-   
 
-    const handleTeamSubmit = () => {
-        if (name.length > 0) {
-            axios.put("/api/teams/update", {
-                idTeam: team?.id,
-                name
-                
+
+    const handleDriverSubmit = () =>{
+        if(name.length){
+            axios.post("/api/teams/add", {
+                name,
+               
             }).then(() => {
-                alert("Ecurie modifié avec succès")
-                window.location.reload();
+                alert("Ecurie ajoutée avec succès")
             })
-        } else {
+        }else{
             setErrorMessage("Veuillez remplir tous les champs obligatoires (*)")
         }
     }
 
 
-     return (
+    return (
         <>
             <div className={`fixed top-[-200px] left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-in-out ${isAddFormDisplayed ? 'translate-y-1/2 opacity-100' : '-translate-y-full opacity-0'}  bg-white w-[400px] h-[700px] rounded-xl shadow-xl z-50`}>
                 <div className="w-full h-full grid grid-rows-[1fr_5fr_1fr] grid-cols-1">
                     <div className="row-span-1 row-start-1 ">
-                        <p className="text-2xl font-bold text-center pt-10">Modification de l'écurie</p>
+                        <p className="text-2xl font-bold text-center pt-10">Ajout d'écurie</p>
                     </div>
                     <div className="row-span-1 row-start-2 flex flex-col gap-2 justify-center">
                         <div className="flex flex-col mb-6">
@@ -66,7 +48,7 @@ export default function EditTeamForm({ isDisplayed, team }: Props) {
                                 id="name"
                                 type="text"
                                 value={name}
-                                placeholder="Mercedes"
+                                placeholder="Albert Park Circuit"
                                 onChange={(e) => setName(e.target.value)}
                                 onKeyDown={
                                     (e) => {
@@ -94,7 +76,7 @@ export default function EditTeamForm({ isDisplayed, team }: Props) {
                             <button
                                 className="w-30 h-10 rounded-md bg-red-600 text-white font-bold hover:cursor-pointer hover:bg-red-700 hover:text-white transition-all duration-300"
 
-                                onClick={handleTeamSubmit}>Valider</button>
+                                onClick={handleDriverSubmit}>Valider</button>
                         </div>
                     </div>
 

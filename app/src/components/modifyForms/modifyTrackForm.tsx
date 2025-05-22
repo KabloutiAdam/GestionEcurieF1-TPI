@@ -1,16 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { country, driverInterface, teamInterface } from "../../interfaces";
+import type { country, driverInterface, teamInterface, trackInterface } from "../../interfaces";
 
 type Props = {
-    team: teamInterface | null;
+    track: trackInterface | null;
     isDisplayed: boolean
 }
 
-export default function EditTeamForm({ isDisplayed, team }: Props) {
+export default function EditTrackForm({ isDisplayed, track }: Props) {
 
     const [isAddFormDisplayed, setIsAddFormDisplayed] = useState(isDisplayed)
-    const [name, setName] = useState(team?.name || "")
+    const [name, setName] = useState(track?.name || "")
     const [query, setQuery] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
 
@@ -23,12 +23,12 @@ export default function EditTeamForm({ isDisplayed, team }: Props) {
     }, [isDisplayed])
 
     useEffect(() => {
-        if (team) {
-            setName(team.name);
+        if (track) {
+            setName(track.name);
             
 
         }
-    }, [team]);
+    }, [track]);
 
   
 
@@ -38,11 +38,11 @@ export default function EditTeamForm({ isDisplayed, team }: Props) {
     const handleTeamSubmit = () => {
         if (name.length > 0) {
             axios.put("/api/teams/update", {
-                idTeam: team?.id,
+                idTeam: track?.id,
                 name
                 
             }).then(() => {
-                alert("Ecurie modifié avec succès")
+                alert("Circuit modifié avec succès")
                 window.location.reload();
             })
         } else {
@@ -56,17 +56,17 @@ export default function EditTeamForm({ isDisplayed, team }: Props) {
             <div className={`fixed top-[-200px] left-1/2 transform -translate-x-1/2 transition-all duration-700 ease-in-out ${isAddFormDisplayed ? 'translate-y-1/2 opacity-100' : '-translate-y-full opacity-0'}  bg-white w-[400px] h-[700px] rounded-xl shadow-xl z-50`}>
                 <div className="w-full h-full grid grid-rows-[1fr_5fr_1fr] grid-cols-1">
                     <div className="row-span-1 row-start-1 ">
-                        <p className="text-2xl font-bold text-center pt-10">Modification de l'écurie</p>
+                        <p className="text-2xl font-bold text-center pt-10">Modification du circuit </p>
                     </div>
                     <div className="row-span-1 row-start-2 flex flex-col gap-2 justify-center">
                         <div className="flex flex-col mb-6">
-                            <label htmlFor="firstname" className="justify-self-start ml-2 mb-2">Nom de l'écurie *</label>
+                            <label htmlFor="firstname" className="justify-self-start ml-2 mb-2">Nom du circuit *</label>
                             <input
                                 className={`w-[70%] border-b-2 ml-5  focus:outline-none py-2 px-3 placeholder:italic ${name.length == 0 ? "border-red-500" : "border-black"}`}
                                 id="name"
                                 type="text"
                                 value={name}
-                                placeholder="Mercedes"
+                                placeholder="Albert Park Circuit"
                                 onChange={(e) => setName(e.target.value)}
                                 onKeyDown={
                                     (e) => {

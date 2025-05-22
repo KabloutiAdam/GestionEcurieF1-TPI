@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useGame } from "../context/gameContext";
 import type { driverInterface, teamInterface } from "../interfaces";
 import axios from "axios";
-import DriverCard from "./driverCard";
+
 
 
 type Props = {
