@@ -46,6 +46,6 @@ if (isProduction) {
 
 // Lancer le serveur
 const PORT = process.env.PORT || 3040;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0',() => {
   console.log(`Serveur Express prêt sur http://localhost:${PORT}`);
 });
