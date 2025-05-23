@@ -32,7 +32,7 @@ app.use("/api/tracks", trackRoutes)
 
 
 if (isProduction) {
-  server.log("Server is running in production mode")
+  console.log("Server is running in production mode")
   const distPath = path.join(__dirname, "../dist");
   app.use(express.static(distPath));
 
