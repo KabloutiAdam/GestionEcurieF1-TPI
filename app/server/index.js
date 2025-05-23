@@ -3,7 +3,7 @@ const cors = require("cors");
 const path = require("path");
 require('dotenv').config();
 
-
+console.log("⚙️ Lancement du backend...");
 const app = express();
 const isProduction = process.env.NODE_ENV === "production";
 
