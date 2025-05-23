@@ -35,8 +35,8 @@ if (isProduction) {
   console.log("Server is running in production mode")
   const distPath = path.join(__dirname, "../dist");
   app.use(express.static(distPath));
-
-  app.get("*", (req, res) => {
+  console.log("Chemin dist absolu:", path.join(__dirname, "../dist"));
+  app.get("/*", (req, res) => {
     res.sendFile(path.join(distPath, "index.html"));
   });
 }
@@ -47,6 +47,6 @@ if (isProduction) {
 
 // Lancer le serveur
 const PORT = process.env.PORT || 3040;
-app.listen(PORT, '0.0.0.0',() => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Serveur Express prêt sur http://localhost:${PORT}`);
 });
