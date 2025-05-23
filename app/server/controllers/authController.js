@@ -39,7 +39,7 @@ exports.loginUser = (req, res) => {
                         role: row.useRole,
                     },
                     SECRET_KEY,
-                    { expiresIn: "2h" }
+                    { expiresIn: "24h" }
                 );
                 
                 return res.status(200).json({
