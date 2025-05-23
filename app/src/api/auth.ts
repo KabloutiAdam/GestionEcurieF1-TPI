@@ -18,11 +18,11 @@ export async function getUser() {
 
 export async function login(email: string, password: string) {
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3040";
-  console.log("API_URL :", import.meta.env.VITE_API_URL);
+ // const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3040";
+ // console.log("API_URL :", import.meta.env.VITE_API_URL);
   
 
-  const response = await fetch(`${API_URL}/api/auth/login`, {
+  const response = await fetch(`/api/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
