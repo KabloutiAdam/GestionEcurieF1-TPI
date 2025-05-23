@@ -37,19 +37,24 @@ if (isProduction) {
   const distPath = path.join(__dirname, "../dist");
   app.use(express.static(distPath));
   console.log("Chemin dist absolu:", path.join(__dirname, "../dist"));
-  app.get("/*", (req, res, next) => {
-    try {
-      // Ignore les requêtes complètement malformées
-      if (req.originalUrl.startsWith("http")) {
-        console.warn("URL ignorée (malformée) :", req.originalUrl);
-        return next();
-      }
-      res.sendFile(path.join(distPath, "index.html"));
-    } catch (err) {
-      console.error("Erreur dans la route catch-all:", err);
-      res.status(500).send("Erreur serveur.");
+  app.get("*", (req, res, next) => {
+  try {
+    // Empêche Express de parser une URL complète ou malformée
+    const url = req.originalUrl;
+
+    // Si l'URL commence par "http", ou contient des doubles points / caractères invalides
+    if (url.startsWith("http") || url.includes("://") || url.includes("..")) {
+      console.warn("⛔ URL malformée ignorée :", url);
+      return res.status(400).send("URL invalide");
     }
-  });
+
+    res.sendFile(path.join(distPath, "index.html"));
+  } catch (err) {
+    console.error("❌ Erreur dans la route fallback :", err);
+    res.status(500).send("Erreur serveur.");
+  }
+});
+
 
 }
 
