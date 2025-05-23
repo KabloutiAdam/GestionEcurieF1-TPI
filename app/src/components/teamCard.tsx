@@ -13,7 +13,7 @@ type Props = {
 
 export default function TeamCard({ team, onEdit, onSelect, onDelete }: Props) {
 
-    const { currentUser, authToken } = useAuth();
+    const { authToken } = useAuth();
     const { pathname } = useLocation();
     const [userRole, setUserRole] = useState<string | null>(null)
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { country, driverInterface, teamInterface, trackInterface } from "../../interfaces";
+import type { country, trackInterface } from "../../interfaces";
 
 type Props = {
     track: trackInterface | null;

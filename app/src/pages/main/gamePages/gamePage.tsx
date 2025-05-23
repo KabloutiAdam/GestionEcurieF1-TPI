@@ -1,4 +1,4 @@
-import { act, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import Background from "../../../components/background";
 import NavBar from "../../../components/navBar/navBar";
 import { useGame } from "../../../context/gameContext";

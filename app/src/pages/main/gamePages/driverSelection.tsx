@@ -4,10 +4,6 @@ import NavBar from "../../../components/navBar/navBar";
 import axios from "axios";
 import type { driverInterface } from "../../../interfaces";
 import DriverCard from "../../../components/driverCard";
-import { useAuth } from "../../../authProvider";
-import AddDriverForm from "../../../components/addForms/addDriverForm";
-import EditDriverForm from "../../../components/modifyForms/modifyDriverForm";
-import { useNavigate } from "react-router";
 import { useGame } from "../../../context/gameContext";
 
 
@@ -24,9 +20,9 @@ export default function DriverSelection() {
 
 
 
-    const { currentUser } = useAuth()
+    
     const { selectedDrivers, setSelectedDrivers, selectedTeam, startSeason} = useGame()
-    const navigate = useNavigate()
+
     
     useEffect(() => {
         const fetchDrivers = async () => {

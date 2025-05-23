@@ -15,7 +15,7 @@ export default function ProtectedGame({ allowedRoles, children }: protectedGameP
 
 
     const { currentUser, isLoading } = useAuth()
-    const { selectedDrivers, selectedTeam, gameState } = useGame()
+    const { gameState } = useGame()
     const { pathname } = useLocation();
 
     setTimeout(() => {

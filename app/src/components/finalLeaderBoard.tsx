@@ -55,7 +55,7 @@ export default function FinalLeaderBoard({ driverList, isResult, isDriver }: Pro
     }, [teamList, driverList]);
 
 
-    let counter = 0
+   
     if (!driverList) return null;
 
     const orderedDrivers = driverList

@@ -29,7 +29,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [raceResult, SetRaceResult] = useState<driverInterface[]>([])
   const [dnfDriver, setDnfDriver] = useState<driverInterface[]>([])
 
+  //@ts-ignore
   const [driverList, setDriverList] = useState<driverInterface[]>([])
+  //@ts-ignore
   const [teamList, setTeamList] = useState<teamInterface[]>([])
 
   const pointDistribution = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]

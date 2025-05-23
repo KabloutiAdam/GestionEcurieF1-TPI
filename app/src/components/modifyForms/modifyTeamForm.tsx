@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { country, driverInterface, teamInterface } from "../../interfaces";
+import type { teamInterface } from "../../interfaces";
 
 type Props = {
     team: teamInterface | null;
@@ -11,7 +11,6 @@ export default function EditTeamForm({ isDisplayed, team }: Props) {
 
     const [isAddFormDisplayed, setIsAddFormDisplayed] = useState(isDisplayed)
     const [name, setName] = useState(team?.name || "")
-    const [query, setQuery] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
 
  

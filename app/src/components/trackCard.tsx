@@ -1,6 +1,6 @@
 import { useLocation } from "react-router";
 import { useAuth } from "../authProvider";
-import type { teamInterface, trackInterface } from "../interfaces";
+import type { trackInterface } from "../interfaces";
 import { useEffect, useState } from "react";
 
 
@@ -13,7 +13,7 @@ type Props = {
 
 export default function TrackCard({ track, onEdit, onSelect, onDelete }: Props) {
 
-    const { currentUser, authToken } = useAuth();
+    const { authToken } = useAuth();
     const { pathname } = useLocation();
     const [userRole, setUserRole] = useState<string | null>(null)
 
