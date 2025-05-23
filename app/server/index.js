@@ -8,7 +8,8 @@ const app = express();
 const isProduction = process.env.NODE_ENV === "production";
 
 
-
+console.log("NODE_ENV =", process.env.NODE_ENV);
+console.log("isProduction =", isProduction);
 
 app.use(cors());
 app.use(express.json());
