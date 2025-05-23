@@ -248,7 +248,7 @@ export default function GamePage() {
 
                                                 <div className="flex flex-row justify-center items-center h-full">
                                                     <img
-                                                        className="w-40"
+                                                        className="w-40 max-h-20"
                                                         src={`/images/tracks/${trackList[trackOrder - 1].pictureLink}`} alt="" />
                                                     <div className="flex flex-row justify-center items-center w-full h-auto">
                                                         <div className="w-full h-full flex justify-end items-start">
@@ -303,7 +303,7 @@ export default function GamePage() {
                                                 <div className="row-span-1 row-start-1 flex flex-col justify-center items-center p-5 rounded-2xl bg-[#191919]">
                                                     <div className="flex flex-row justify-center items-center h-full">
                                                         <img
-                                                            className="w-40"
+                                                            className="w-40 max-h-20"
                                                             src={`/images/tracks/${trackList[trackOrder].pictureLink}`} alt="" />
                                                         <div className="flex flex-row justify-center items-center w-full h-auto">
                                                             <div className="w-full h-full flex justify-end items-start">
@@ -362,7 +362,7 @@ export default function GamePage() {
 
                                                 <div className="flex flex-row justify-center items-center h-full">
                                                     <img
-                                                        className="w-40"
+                                                        className="w-40 max-h-20"
                                                         src={`/images/tracks/${trackList[trackOrder - 1].pictureLink}`} alt="" />
                                                     <div className="flex flex-row justify-center items-center w-full h-auto">
                                                         <div className="w-full h-full flex justify-end items-start">
@@ -395,7 +395,7 @@ export default function GamePage() {
                                                 <div className="row-span-1 row-start-1 flex flex-col justify-center items-center p-5 rounded-2xl bg-[#191919]">
                                                     <div className="flex flex-row justify-center items-center h-full">
                                                         <img
-                                                            className="w-40"
+                                                            className="w-40 max-h-20"
                                                             src={`/images/tracks/${trackList[trackOrder].pictureLink}`} alt="" />
                                                         <div className="flex flex-row justify-center items-center w-full h-auto">
                                                             <div className="w-full h-full flex justify-end items-start">

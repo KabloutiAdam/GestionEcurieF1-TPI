@@ -41,8 +41,8 @@ export type country = {
 export type trackInterface = {
     id: number;
     name: string;
-    length: number;
-    trackOrder: number;
+    trackLength: string;
+    trackOrder: string;
     pictureLink: string;
     country: number
     trackCountryPicture: string;

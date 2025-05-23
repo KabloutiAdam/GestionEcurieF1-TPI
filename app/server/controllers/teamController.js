@@ -68,3 +68,25 @@ exports.updateTeam = async (req, res) => {
         
     })
 }
+
+
+exports.deleteTeam = async (req, res) => {
+
+    let params = [
+        req.body.param
+    ]
+
+    const baseQuery = `
+        DELETE FROM t_teams
+        WHERE idTeam = ?;
+    `;
+
+    db.run(baseQuery, params, function (err) {
+        if (err) {
+            console.error("Erreur lors de la suppression :", err);
+            return res.status(500).json({ error: "Erreur serveur" });
+        }
+        return res.json({ success: true, });
+
+    })
+}

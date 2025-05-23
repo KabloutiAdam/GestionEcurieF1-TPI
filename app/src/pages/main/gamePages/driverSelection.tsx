@@ -55,6 +55,9 @@ export default function DriverSelection() {
     const handleEditDriver = () => {                                                                                     
 
     };
+    const handldeDeleteDriver  = () => {                                                                                     
+
+    };
 
     const handleDriverSelection = (driver: driverInterface) => {
 
@@ -105,7 +108,7 @@ export default function DriverSelection() {
                             {driverList.map((driver) => (
                                 <>
                                     <div className={`w-fit h-fit z-1 border-2 rounded-2xl duration-150 hover:scale-110 hover:cursor-pointer  ${selectedDrivers.some(d => d.id === driver.id) ? "border-red-700 p-4" : "border-black p-4"}`} >
-                                        <DriverCard driver={driver} onEdit={handleEditDriver} onSelect={handleDriverSelection} />
+                                        <DriverCard driver={driver} onEdit={handleEditDriver} onSelect={handleDriverSelection} onDelete={handldeDeleteDriver} />
                                     </div>
                                 </>
                             ))}

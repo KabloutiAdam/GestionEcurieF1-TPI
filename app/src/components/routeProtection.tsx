@@ -7,7 +7,7 @@ type ProtectedRouteProps = PropsWithChildren & {
 };
 
 export default function ProtectedRoute({ allowedRoles, children }: ProtectedRouteProps) {
-    const { authToken, isLoading } = useAuth();
+    const { authToken, isLoading, handleLogout } = useAuth();
     
     if (isLoading) {
         return <p>Chargement...</p>;
@@ -25,7 +25,9 @@ export default function ProtectedRoute({ allowedRoles, children }: ProtectedRout
 
         const now = Date.now() / 1000;
         if (payload.exp < now) {
-            return <Navigate to="/login" replace />;
+            
+            handleLogout()
+            return null
         }
 
         const userRole = payload.role;

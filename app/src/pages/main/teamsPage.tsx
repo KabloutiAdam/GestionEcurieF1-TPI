@@ -19,6 +19,21 @@ export default function TeamsPage() {
     const [userRole, setUserRole] = useState<string | null>(null)
     const { authToken } = useAuth();
 
+
+    const handldeDeleteTeam = (team: teamInterface) => {
+    
+        try {
+            axios.post("/api/teams/delete", {
+                param: team.id
+            })
+        } catch (error) {
+            console.error(error)
+        }
+
+
+    };
+
+
     useEffect(() => {
         const fetchDrivers = async () => {
             try {
@@ -32,7 +47,7 @@ export default function TeamsPage() {
 
         fetchDrivers()
 
-    }, [])
+    }, [handldeDeleteTeam])
 
     useEffect(() => {
         if (authToken) {
@@ -72,7 +87,7 @@ export default function TeamsPage() {
                     </div>
                 )}
 
-                
+
                 <main className="pt-10 w-full h-screen flex justify-center flex-col items-center">
                     <a href="/mainPage" className="w-[80%] text-xl italic font-bold text-white text-start underline mt-20">Retourner au menu principal</a>
                     <div className="h-10 w-full display-flex justify-center items-center mt-20 grid grid-cols-[1fr_2fr_1fr]">
@@ -92,7 +107,7 @@ export default function TeamsPage() {
                             <>
 
                                 <div className="w-fit h-fit border-2 rounded-2xl border-red-700 mr-5 mt-10 ml-5 mb-30 duration-150 hover:scale-110 hover:cursor-pointer">
-                                    <TeamCard team={team} onEdit={handleEditTeam} />
+                                    <TeamCard team={team} onEdit={handleEditTeam} onDelete={handldeDeleteTeam} />
                                 </div>
 
                             </>

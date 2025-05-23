@@ -24,6 +24,20 @@ export default function DriversPage() {
     const [selectedDriver, setSelectedDriver] = useState<driverInterface | null>(null);
     const [userRole, setUserRole] = useState<string | null>(null)
     const { authToken } = useAuth();
+    
+    const handldeDeleteDriver = (driver: driverInterface) => {
+
+        try {
+            axios.post("/api/drivers/delete", {
+                param: driver.id
+            })
+        } catch (error) {
+            console.error(error)
+        }
+
+        
+    };
+
 
     useEffect(() => {
         const fetchDrivers = async () => {
@@ -38,7 +52,7 @@ export default function DriversPage() {
 
         fetchDrivers()
 
-    }, [])
+    }, [handldeDeleteDriver])
 
 
     useEffect(() => {
@@ -58,6 +72,7 @@ export default function DriversPage() {
         setSelectedDriver(driver);
         setIsModifyFormDisplayed(true);
     };
+
 
     const addDriver = () => {
         setIsAddFormDisplayed(true)
@@ -85,7 +100,7 @@ export default function DriversPage() {
 
 
                 <main className="pt-10 w-full h-screen flex justify-center flex-col items-center">
-                     <a href="/mainPage" className="w-[80%] text-xl italic font-bold text-white text-start underline mt-20">Retourner au menu principal</a>
+                    <a href="/mainPage" className="w-[80%] text-xl italic font-bold text-white text-start underline mt-20">Retourner au menu principal</a>
                     <div className="h-20 w-full display-flex justify-center items-center mt-20 grid grid-cols-[1fr_2fr_1fr]">
                         <p className="col-start-2 col-span-1 text-7xl font-bold text-center text-white">PILOTES</p>
                         {userRole === "admin" &&
@@ -102,7 +117,7 @@ export default function DriversPage() {
                         {driverList.map((driver) => (
                             <>
                                 <div className="w-fit h-fit border-2 rounded-2xl border-red-700 mr-5 mt-10 ml-5 mb-30 duration-150 hover:scale-110 hover:cursor-pointer">
-                                    <DriverCard driver={driver} onEdit={handleEditDriver} />
+                                    <DriverCard driver={driver} onEdit={handleEditDriver} onDelete={handldeDeleteDriver} />
                                 </div>
                             </>
                         ))}

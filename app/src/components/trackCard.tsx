@@ -6,11 +6,12 @@ import { useEffect, useState } from "react";
 
 type Props = {
     track: trackInterface;
-    onEdit: (track: trackInterface) => void
+    onEdit: (track: trackInterface) => void;
+    onDelete: (track: trackInterface) => void;
     onSelect?: (track: trackInterface) => void;
 }
 
-export default function TrackCard({ track, onEdit, onSelect }: Props) {
+export default function TrackCard({ track, onEdit, onSelect, onDelete }: Props) {
 
     const { currentUser, authToken } = useAuth();
     const { pathname } = useLocation();
@@ -36,10 +37,17 @@ export default function TrackCard({ track, onEdit, onSelect }: Props) {
             <div className={` grid grid-rows-[1fr_4fr_2fr] grid-cols-1 bg-black rounded-2xl ${pathname == '/game/teamSelection' ? "h-60 w-80 " : "h-100 w-150"}`}>
                 <div className="row-span-1 row-start-1 flex flex-row items-start justify-end ">
                     {(userRole === "admin" && pathname != "/game/teamSelection") &&
-                        <div
-                            onClick={() => onEdit(track)}
-                            className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">
-                            <img src="images/logo/editer.png" className=" invert brightness-0 w-full h-full" alt="logo édition" />
+                        <div className="flex">
+                            <div
+                                onClick={() => onEdit(track)}
+                                className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">
+                                <img src="../../images/logo/editer.png" className=" invert brightness-0 w-full h-full" alt="logo édition" />
+                            </div>
+                            <div
+                                onClick={() => onDelete(track)}
+                                className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">
+                                <img src="../../images/logo/supprimer.png" className=" invert brightness-0 w-full h-full" alt="logo édition" />
+                            </div>
                         </div>
 
                     }

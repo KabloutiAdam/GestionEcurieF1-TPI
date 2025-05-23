@@ -18,6 +18,23 @@ export default function TracksPage() {
     const [userRole, setUserRole] = useState<string | null>(null)
     const { authToken } = useAuth()
 
+
+
+    const handldeDeleteDriver = (track: trackInterface) => {
+
+        try {
+            axios.post("/api/tracks/delete", {
+                param: track.id,
+                order : track.trackOrder
+            })
+        } catch (error) {
+            console.error(error)
+        }
+
+
+    };
+
+
     useEffect(() => {
         const fetchDrivers = async () => {
             try {
@@ -31,7 +48,8 @@ export default function TracksPage() {
 
         fetchDrivers()
 
-    }, [])
+    }, [handldeDeleteDriver])
+
     useEffect(() => {
         if (authToken) {
             try {
@@ -87,7 +105,7 @@ export default function TracksPage() {
                             <>
 
                                 <div className="w-fit h-fit border-2 rounded-2xl border-red-700 mr-5 mt-10 ml-5 mb-30 duration-150 hover:scale-110 hover:cursor-pointer">
-                                    <TrackCard track={track} onEdit={handleEditTeam} />
+                                    <TrackCard track={track} onEdit={handleEditTeam} onDelete={handldeDeleteDriver}/>
                                 </div>
 
                             </>

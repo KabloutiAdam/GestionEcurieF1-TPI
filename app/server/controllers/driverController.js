@@ -127,7 +127,7 @@ exports.updateDriverTeam = async (req, res) => {
 
 exports.updateDriverPoints = async (req, res) => {
 
-   
+
     let params = [
         req.body.points,
         req.body.idDriver
@@ -141,6 +141,27 @@ exports.updateDriverPoints = async (req, res) => {
     db.run(updateQuery, params, function (err) {
         if (err) {
             console.error("Erreur lors de la mise à jour :", err);
+            return res.status(500).json({ error: "Erreur serveur" });
+        }
+        return res.json({ success: true, });
+
+    })
+}
+
+exports.deleteDriver = async (req, res) => {
+
+    let params = [
+        req.body.param
+    ]
+
+    const baseQuery = `
+        DELETE FROM t_drivers
+        WHERE idDriver = ?;
+    `;
+
+    db.run(baseQuery, params, function (err) {
+        if (err) {
+            console.error("Erreur lors de la suppression :", err);
             return res.status(500).json({ error: "Erreur serveur" });
         }
         return res.json({ success: true, });

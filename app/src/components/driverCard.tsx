@@ -6,25 +6,26 @@ import { useEffect, useState } from "react";
 type Props = {
     driver: driverInterface;
     onEdit: (driver: driverInterface) => void;
+    onDelete: (driver: driverInterface) => void;
     onSelect?: (driver: driverInterface) => void;
 }
 
-export default function DriverCard({ driver, onEdit, onSelect }: Props) {
+export default function DriverCard({ driver, onEdit, onSelect, onDelete }: Props) {
 
     const { authToken } = useAuth();
     const { pathname } = useLocation();
     const [userRole, setUserRole] = useState<string | null>(null)
 
     useEffect(() => {
-            if (authToken) {
-                try {
-                    const decoded = JSON.parse(atob(authToken.split('.')[1]));
-                    setUserRole(decoded.role);
-                } catch (e) {
-                    console.error("Erreur lors du décodage du token :", e);
-                }
+        if (authToken) {
+            try {
+                const decoded = JSON.parse(atob(authToken.split('.')[1]));
+                setUserRole(decoded.role);
+            } catch (e) {
+                console.error("Erreur lors du décodage du token :", e);
             }
-        }, [authToken]);
+        }
+    }, [authToken]);
 
 
     return (
@@ -37,11 +38,22 @@ export default function DriverCard({ driver, onEdit, onSelect }: Props) {
                         <img className="rounded-2xl" src={`../../images/drivers/${driver.pictureLink}`} alt={`image de ${driver.firstname} ${driver.lastname}`} />
                     </div>
                     {(userRole === "admin" && pathname != "/game/driverSelection") &&
-                        <div
-                            onClick={() => onEdit(driver)}
-                            className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">
-                            <img src="../../images/logo/editer.png" className=" invert brightness-0 w-full h-full" alt="logo édition" />
+                        <div>
+                            <div
+                                onClick={() => onEdit(driver)}
+                                className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">
+                                <img src="../../images/logo/editer.png" className=" invert brightness-0 w-full h-full" alt="logo édition" />
+                            </div>
+                            <div
+                                onClick={() => onDelete(driver)}
+                                className="w-12 h-12 m-5 p-2 flex flex-row items-center justify-center hover:bg-slate-600 hover:cursor-pointer rounded-2xl ">
+                                <img src="../../images/logo/supprimer.png" className=" invert brightness-0 w-full h-full" alt="logo édition" />
+                            </div>
                         </div>
+                        
+
+
+
 
                     }
 

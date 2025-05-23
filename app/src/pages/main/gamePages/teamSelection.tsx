@@ -45,6 +45,10 @@ export default function TeamSelectionPage() {
 
 
     }
+    const handleDeleteTeam = () => {
+
+
+    }
 
     const handleNextPage = () =>{
         if(selectedTeam){
@@ -77,7 +81,7 @@ export default function TeamSelectionPage() {
                                 <>
 
                                     <div className={`w-fit h-fit border-2 rounded-2xl  mr-5 mt-10 ml-5 mb-30 duration-50 hover:scale-110 hover:cursor-pointer ${selectedTeam === team ? "border-red-700 p-4" : "border-black p-4"}`}>
-                                        <TeamCard team={team} onSelect={handleTeamSelect} onEdit={handleEditTeam} />
+                                        <TeamCard team={team} onSelect={handleTeamSelect} onEdit={handleEditTeam} onDelete={handleDeleteTeam} />
                                     </div>
 
                                 </>
