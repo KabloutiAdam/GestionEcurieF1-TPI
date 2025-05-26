@@ -18,9 +18,7 @@ export default function ProtectedGame({ allowedRoles, children }: protectedGameP
     const { gameState } = useGame()
     const { pathname } = useLocation();
 
-    setTimeout(() => {
-        console.log(gameState);
-    }, 2000);
+    
 
 
     if (isLoading || currentUser === undefined) {

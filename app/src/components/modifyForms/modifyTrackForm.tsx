@@ -37,7 +37,7 @@ export default function EditTrackForm({ isDisplayed, track }: Props) {
             setTrackLength(track.trackLength);
             setOrder(track.trackOrder);
             
-            console.log(track)
+            
         }
     }, [track]);
 
@@ -47,7 +47,7 @@ export default function EditTrackForm({ isDisplayed, track }: Props) {
             const matchedCountry = countryList.find(
                 (c) => c.id === track.country
             );
-            console.log(matchedCountry)
+       
 
             if (matchedCountry) {
                 setNationalitySelected(matchedCountry);

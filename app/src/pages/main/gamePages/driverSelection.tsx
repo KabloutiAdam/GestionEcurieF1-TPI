@@ -43,10 +43,7 @@ export default function DriverSelection() {
     }, [])
 
 
-    useEffect(() => {
-        console.log(selectedTeam)
-        console.log(selectedDrivers)
-    }, [selectedDrivers])
+   
 
     const handleEditDriver = () => {                                                                                     
 

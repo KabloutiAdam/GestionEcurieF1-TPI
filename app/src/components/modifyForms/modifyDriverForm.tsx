@@ -41,7 +41,7 @@ export default function EditDriverForm({ isDisplayed, driver }: Props) {
             const matchedCountry = countryList.find(
                 (c) => c.name === driver.nationality
             );
-            console.log(matchedCountry)
+            
 
             if (matchedCountry) {
                 setNationalitySelected(matchedCountry);

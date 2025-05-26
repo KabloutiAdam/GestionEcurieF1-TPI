@@ -18,8 +18,7 @@ export async function getUser() {
 
 export async function login(email: string, password: string) {
 
- // const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3040";
- // console.log("API_URL :", import.meta.env.VITE_API_URL);
+ 
   
 
   const response = await fetch(`/api/auth/login`, {
@@ -31,7 +30,7 @@ export async function login(email: string, password: string) {
   });
 
   const data = await response.json();
-  console.log(data)
+
   if (!response.ok) throw new Error(data.error || "Erreur inconnue");
 
   return [response.status, data] as const;

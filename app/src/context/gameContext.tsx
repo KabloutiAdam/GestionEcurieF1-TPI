@@ -124,7 +124,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       });
 
     } catch (error) {
-      console.error("erreur")
+      
     }
 
     navigate("/game/gamePage")
@@ -135,7 +135,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
     localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
 
-    console.log("fin")
+   
 
   }
 
@@ -167,11 +167,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
       }
       setDnfDriver(dnfDriver)
-      console.log(dnfDriver)
+      
 
 
       SetRaceResult(driverListRace.sort((a, b) => b.rating - a.rating))
-      console.log(driverListRace)
+      
       for (let i = 0; i < pointDistribution.length; i++) {
         driverListRace[i].point += pointDistribution[i]
         await axios.put('/api/drivers/updatePoints',
@@ -184,7 +184,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
       const resultToSave = [driverListRace, dnfDriver]
       localStorage.setItem("raceResult", JSON.stringify(resultToSave));
-      console.log(driverListRace)
+      
 
 
     } catch (error) {

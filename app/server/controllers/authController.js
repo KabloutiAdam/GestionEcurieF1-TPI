@@ -6,11 +6,7 @@ const SECRET_KEY = process.env.SECRET_JWT_KEY
 
 exports.loginUser = (req, res) => {
     const { login, password } = req.body;
-    const plainPassword = "pass";
-    bcrypt.hash(plainPassword, 10, (err, hash) => {
-        console.log(plainPassword)
-        console.log(hash);
-    });
+    
     db.get(
         "SELECT * FROM t_users WHERE useEmail = ?", [login], (err, row) => {
             if (err) {

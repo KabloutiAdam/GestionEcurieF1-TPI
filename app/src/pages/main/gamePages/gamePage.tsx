@@ -74,7 +74,7 @@ export default function GamePage() {
         if (settings) {
             const parsed = JSON.parse(settings)
             const newSettings = [parsed[0], parsed[1], 1]
-            console.log(parsed)
+            
             localStorage.setItem("gameSettings", JSON.stringify(newSettings))
         }
 
@@ -131,7 +131,7 @@ export default function GamePage() {
         if (settings) {
             const parsed = JSON.parse(settings)
             const newSettings = [parsed[0], parsed[1], parsed[2] + 1]
-            console.log(parsed)
+            
             localStorage.setItem("gameSettings", JSON.stringify(newSettings))
         }
 
@@ -151,7 +151,7 @@ export default function GamePage() {
 
 
     const loadingRace = async () => {
-        console.log(trackOrder)
+      
         for (let i = 0; i <= 300; i++) {
             setLoadingValue(i);
             await wait(20);
